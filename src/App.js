@@ -24,17 +24,38 @@ const App = () => {
     },
   ])
 
+  // Convert tasks to JSON format
+  // const taskJSON = JSON.stringify(tasks);
+
   // Delete Task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  // Toggle Reminder
+  const toggleReminder = (id) => {
+    setTasks(tasks.map((task) => task.id === id 
+        ? { ...task, reminder: !task.reminder } 
+        : task
+      )
+    )
+  }
+
   return (
     <div className='container'>
       <Header title='Taskou' />
-      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} /> : "You currently don't have any task."}
+      {tasks.length > 0 ? (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />) : ("You currently don't have any task.")
+      }
     </div>
   )
 }
 
 export default App
+
+// Array.prototype.map2 = function(callback) {
+//   const newArray = []
+//   for(let i = 0; i < this.length; i++) {
+//     newArray.push(callback(this[i], i, this))
+//   }
+//   return newArray
+// }
